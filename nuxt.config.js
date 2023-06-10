@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'UPLB IAMS Visitor',
     htmlAttrs: {
       lang: 'en'
     },
@@ -25,6 +25,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/vs-pagination',
+    '~/plugins/vue-select'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,6 +42,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/dotenv',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -50,5 +54,60 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+
+  },
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      local: false,
+      keycloak: {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization: `${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+          token: `${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+          userInfo: `${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
+          logout: `${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout`
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          name: 'Authorization',
+          maxAge: 300
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
+        idToken: {
+          property: 'id_token',
+          maxAge: 60 * 60 * 24 * 30,
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        clientId: 'uplb-iams-visitor',
+        // clientSecret: '3EYpSJejNEwnMpnGK5UM7lgPrqQh0yES',
+        accessType: 'public',
+        scope: ['openid', 'profile', 'email'],
+        codeChallengeMethod: 'S256'
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/'
+    }
+  },
+
+  proxy: {
+    '/api' : {
+      target: `${process.env.BACKEND_URL}`,
+      changeOrigin: true,
+    },
+    '/admin' : {
+      target: `${process.env.KEYCLOAK_URL}`,
+      changeOrigin: true
+    }
+  },
 }
