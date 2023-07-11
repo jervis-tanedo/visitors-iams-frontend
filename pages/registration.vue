@@ -302,13 +302,27 @@
                       class="form-control block text-gray-700 text-sm font-bold mb-2"
                       >Preview:</label
                     >
-                    <img alt="" id="frame" class="h-64 w-96 border border-black">
+                    <img alt="" id="frame" class="border border-black aspect-auto">
+                    <!-- <img alt="" id="frame" class="h-64 w-96 border border-black aspect-auto"> -->
                   </div>
                 </div>
                 <div class="py-1">
-                  <span class="block text-gray-700 text-xl font-bold mb-2"
+                  <!-- <span class="block text-gray-700 text-xl font-bold mb-2"
                     >Address in indicated in your ID</span
-                  >
+                  > -->
+                  <label
+                      class="form-control block text-gray-700 text-sm font-bold mb-2"
+                      for="lastname"
+                    >
+                    Address in indicated in your ID
+                    </label>
+                    <input
+                      :placeholder="'(Required)'"
+                      tabindex=""
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                      v-model="address"
+                      type="text"
+                    />
                 </div>
               </div>
               <div v-show="currentStep == 2" class="my-2">
@@ -373,6 +387,12 @@
                         >ID Number</label>
                         <span name="sIdNumber">{{ idNumber }}</span>
                     </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                  <div class="form-group mb-4">
+                    <label for="sAddress" class="form-control block text-gray-700 text-sm font-bold mb-2">Address</label>
+                    <span name="sAddress">{{ address }}</span>
+                  </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4">
                     <div class="form-group mb-4">
@@ -493,6 +513,7 @@ export default {
       getIdType: "registration/getIdType",
       getIdNumber: "registration/getIdNumber",
       getIdPhoto: "registration/getIdPhoto",
+      getAddress: "registration/getAddress",
     }),
 
     acceptTos: {
@@ -590,6 +611,14 @@ export default {
         this.setIdPhoto(value);
       },
     },
+    address: {
+      get() {
+        return this.getAddress
+      },
+      set(value){
+        this.setAddress(value)
+      }
+    }
   },
   methods: {
     ...mapActions({
@@ -608,6 +637,7 @@ export default {
       setIdType: "registration/SET_ID_TYPE",
       setIdNumber: "registration/SET_ID_NUMBER",
       setIdPhoto: "registration/SET_ID_PHOTO",
+      setAddress: "registration/SET_ADDRESS",
     }),
 
     close() {
