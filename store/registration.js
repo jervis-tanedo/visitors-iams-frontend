@@ -12,6 +12,7 @@ export const state = () => ({
         idNumber: null,
         idType: null,
         idPhoto: '',
+        address: '',
     },
     // FIND SOLUTION IN ARRAY VALUE PROBLEM
     errorMsg: [],
@@ -59,38 +60,39 @@ export const getters = {
     getIdPhoto(state){
         return state.userDetails.idPhoto
     },
+    getAddress(state){
+        return state.userDetails.address
+    }
 }
 
 export const actions = {
     tosAccepted({commit, state}){
         commit('SET_TOS', 1)
     },
+
     async save({dispatch, commit, state }, payload){
-        const formData = new FormData()
-        formData.append('firstname', state.userDetails.firstname)
-        formData.append('middlename', state.userDetails.middlename)
-        formData.append('lastname', state.userDetails.lastname)
+        let formData = new FormData()
+        formData.append('first_name', state.userDetails.firstname)
+        formData.append('middle_name', state.userDetails.middlename)
+        formData.append('last_name', state.userDetails.lastname)
         formData.append('email', state.userDetails.email)
         formData.append('idNumber', state.userDetails.idNumber)
         formData.append('idType', state.userDetails.idType)
-        formData.append('birthdate', state.userDetails.birthdate)
+        formData.append('date_of_birth', state.userDetails.birthdate)
         formData.append('phone', state.userDetails.phone)
         formData.append('idPhoto', state.userDetails.idPhoto)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        console.log(formData)
+        formData.append('address', state.userDetails.address)
         try{
-            const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData, config).then(() =>{
+            const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData).then(response => {
                 let message = "Application Success"
                 commit('alert/SUCCESS', message, { root: true })
+                console.log(response)
             })
             
             console.log(res)
         } catch (error) {
-
+            let message = "You already have a pending request"
+            commit('alert/ERROR', message, { root: true})
         }
     },
 }
@@ -151,6 +153,10 @@ export const mutations = {
 
     SET_ID_PHOTO(state, idPhoto){
         state.userDetails.idPhoto = idPhoto
+    },
+
+    SET_ADDRESS(state, address){
+        state.userDetails.address = address
     },
 
     CLEAR(state){
