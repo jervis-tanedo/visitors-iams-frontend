@@ -6,6 +6,7 @@ export const state = () => ({
         birthdate: '',
         phone: '',
         email: '',
+        sex: '',
         uuid: null,
         token: null,
         role: [],
@@ -13,6 +14,7 @@ export const state = () => ({
         idType: null,
         idPhoto: '',
         address: '',
+        selfie: null,
     },
     // FIND SOLUTION IN ARRAY VALUE PROBLEM
     errorMsg: [],
@@ -39,6 +41,9 @@ export const getters = {
     getEmail(state) {
         return state.userDetails.email
     },
+    getSex(state) {
+        return state.userDetails.sex
+    },
     getToken(state) {
         return state.userDetails.token
     },
@@ -60,6 +65,9 @@ export const getters = {
     getIdPhoto(state){
         return state.userDetails.idPhoto
     },
+    getSelfie(state){
+        return state.userDetails.selfie
+    },
     getAddress(state){
         return state.userDetails.address
     }
@@ -70,7 +78,7 @@ export const actions = {
         commit('SET_TOS', 1)
     },
 
-    async save({dispatch, commit, state }, payload){
+    async save({dispatch, commit, state }){
         let formData = new FormData()
         formData.append('first_name', state.userDetails.firstname)
         formData.append('middle_name', state.userDetails.middlename)
@@ -82,6 +90,7 @@ export const actions = {
         formData.append('phone', state.userDetails.phone)
         formData.append('idPhoto', state.userDetails.idPhoto)
         formData.append('address', state.userDetails.address)
+        formData.append('selfie', state.userDetails.selfie)
         try{
             const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData).then(response => {
                 let message = "Application Success"
@@ -157,6 +166,10 @@ export const mutations = {
 
     SET_ADDRESS(state, address){
         state.userDetails.address = address
+    },
+
+    SET_SELFIE(state, selfie){
+        state.userDetails.selfie = selfie
     },
 
     CLEAR(state){

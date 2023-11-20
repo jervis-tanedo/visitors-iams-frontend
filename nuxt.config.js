@@ -36,6 +36,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    ['@nuxtjs/moment', { /* module options */ }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -106,9 +107,9 @@ export default {
       target: `${process.env.BACKEND_URL}`,
       changeOrigin: true,
     },
-    '/admin' : {
-      target: `${process.env.KEYCLOAK_URL}`,
-      changeOrigin: true
-    }
+    // '/admin' : {
+    //   target: `${process.env.KEYCLOAK_URL}`,
+    //   changeOrigin: true
+    // }
   },
 }

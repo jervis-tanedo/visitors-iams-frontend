@@ -1,5 +1,5 @@
 <template>
-    <div :class="modalOpen ? '-translate-x-0' : 'translate-x-full'" >
+    <div :class="modalOpen ? '-translate-x-0' : 'translate-x-full'" class="bg-gray-500 bg-opacity-75 transition-opacity">
         <div>
             <slot name="content">
 

@@ -1,3 +1,6 @@
 <template>
-    <Nuxt/>
+    <div>
+        <NoLayoutNavbar></NoLayoutNavbar>
+        <Nuxt/>
+    </div>
 </template>

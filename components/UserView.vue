@@ -2,19 +2,19 @@
         <div>
             <div>
                 <h1>First Name:</h1>
-                <h1>{{ userData.first_name }}</h1>
+                <h1>{{ registrationData.first_name }}</h1>
             </div>
             <div>
                 <h1>Middle Name:</h1>
-                <h3>{{ userData.middle_name }}</h3>
+                <h3>{{ registrationData.middle_name }}</h3>
             </div>
             <div>
                 <h1>Last Name:</h1>
-                <h3>{{ userData.last_name }}</h3>
+                <h3>{{ registrationData.last_name }}</h3>
             </div>
             <div>
                 <h1>Data:</h1>
-                <h3>{{ userData }}</h3>
+                <h3>{{ registrationData }}</h3>
             </div>
             <div>
                 <img :src="imgUrl" alt="">
@@ -34,7 +34,7 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
             id: {
                 type: String,
             },
-            userData: {
+            registrationData: {
                 type: Object
             }
         },

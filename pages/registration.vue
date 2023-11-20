@@ -1,12 +1,14 @@
 <template>
   <div
     class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0"
-  ><Alert/>
+  >
+  <Alert/>
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
       <div class="mt-8 bg-white shadow sm:rounded-lg p-6">
         <div>
           <div class="card py-1">
-            <div class="card-header bg-white rounded p-2 m-1 h-100">
+            <EmailValidate v-if="validated === false"></EmailValidate>
+            <div class="card-header bg-white rounded p-2 m-1 h-100" v-show="validated">
               <!-- STEPS -->
               <div>
                 <ol
@@ -194,7 +196,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group mb-4">
+                <!-- <div class="form-group mb-4">
                   <div class="mb-4">
                     <label
                       class="form-control block text-gray-700 text-sm font-bold mb-2"
@@ -212,7 +214,7 @@
                       <span class="text-red-500">Required</span>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="grid grid-cols-2 gap-4">
 
                 </div>
@@ -279,6 +281,27 @@
                       <span class="text-red-500">Required</span>
                     </div>
                   </div>
+                  
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                  <div class="form-group mb-4">
+                  <!-- <span class="block text-gray-700 text-xl font-bold mb-2"
+                    >Address in indicated in your ID</span
+                  > -->
+                  <label
+                      class="form-control block text-gray-700 text-sm font-bold mb-2"
+                      for="address"
+                    >
+                    Address in indicated in your ID
+                    </label>
+                    <input
+                      :placeholder="'(Required)'"
+                      tabindex=""
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                      v-model="address"
+                      type="text"
+                    />
+                </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4 h-95">
                   <div class="form-group mb-4">
@@ -306,24 +329,26 @@
                     <!-- <img alt="" id="frame" class="h-64 w-96 border border-black aspect-auto"> -->
                   </div>
                 </div>
-                <div class="py-1">
-                  <!-- <span class="block text-gray-700 text-xl font-bold mb-2"
-                    >Address in indicated in your ID</span
-                  > -->
-                  <label
+                <div class="grid grid-cols-2 gap-4 h-95">
+                  <div class="form-group mb-4">
+                    <label
+                      for="selfie"
                       class="form-control block text-gray-700 text-sm font-bold mb-2"
-                      for="lastname"
+                      >Selfie:</label
                     >
-                    Address in indicated in your ID
-                    </label>
-                    <input
-                      :placeholder="'(Required)'"
-                      tabindex=""
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
-                      v-model="address"
-                      type="text"
-                    />
+                    <Camera v-if="currentStep == 1"></Camera>
+                    <!-- <button @click="openCamera()" class="w-40 bg-red-500 hover:bg-uplbmaroon text-white font-bold py-2 px-4 rounded">Take selfie</button> -->
+                  </div>
+                  <div class="form-group mb-4">
+                    <label
+                      for="frame"
+                      class="form-control block text-gray-700 text-sm font-bold mb-2"
+                      >Preview:</label
+                    >
+                    <img alt="" id="selfie" class="border border-black aspect-auto" :src="selfie">
+                  </div>
                 </div>
+                
               </div>
               <div v-show="currentStep == 2" class="my-2">
                 <div>
@@ -402,6 +427,14 @@
                         <img :src="image" alt="" class="h-100 w-100 border border-black"/>
                     </div>
                 </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="form-group mb-4">
+                        <label for="sIdPhoto"
+                        class="form-control block text-gray-700 text-sm font-bold mb-2"
+                        >Self Image</label>
+                        <img :src="selfie" alt="" class="h-100 w-100 border border-black"/>
+                    </div>
+                </div>
               </div>
               <!-- PREVIOUS AND NEXT BUTTONS -->
               <div class="form-group mb-2 mt-2 items-center pb-6">
@@ -422,7 +455,7 @@
                 <button
                   v-show="currentStep >= lastStep"
                   tabindex="15"
-                  class="w-40 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  class="w-40 bg-uplbmaroon text-white font-bold py-2 px-4 rounded"
                   @click.prevent="save()"
                 >
                   Save
@@ -431,6 +464,13 @@
             </div>
           </div>
         </div>
+        <!-- <GenericModal :isOpen="photoModal" v-if="photoModal">
+          <template v-slot:content>
+              <div>
+                <Camera @closeModal="close"></Camera>
+              </div>
+          </template>
+        </GenericModal> -->
         <GenericModal :isOpen="showModal" v-if="showModal">
           <template v-slot:content>
             <div
@@ -478,6 +518,7 @@ export default {
       },
       image: '',
       showModal: true,
+      cameraOn: false,
       isNotDisabled: true,
       currentStep: 0,
       firstStep: 0,
@@ -514,6 +555,8 @@ export default {
       getIdNumber: "registration/getIdNumber",
       getIdPhoto: "registration/getIdPhoto",
       getAddress: "registration/getAddress",
+      validated: "emailValidate/validated",
+      getSelfie: "registration/getSelfie"
     }),
 
     acceptTos: {
@@ -618,6 +661,14 @@ export default {
       set(value){
         this.setAddress(value)
       }
+    },
+    selfie:{
+      get(){
+        return this.getSelfie
+      },
+      set(value){
+        this.setSelfie(value)
+      }
     }
   },
   methods: {
@@ -638,6 +689,7 @@ export default {
       setIdNumber: "registration/SET_ID_NUMBER",
       setIdPhoto: "registration/SET_ID_PHOTO",
       setAddress: "registration/SET_ADDRESS",
+      setSelfie: "registration/SET_SELFIE",
     }),
 
     close() {
@@ -727,7 +779,13 @@ export default {
                 this.errors["idPhoto"] = true;
             }
         }
-      } 
+      } else if (this.currentStep == 2){
+            
+      }
+    },
+
+    openCamera(){
+      this.photoModal = true
     },
 
     onFileChange(event) {
@@ -752,10 +810,16 @@ export default {
       reader.readAsDataURL(file);
       // console.log(reader)
     },
+
+    cameraStop(){
+      stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    }
   },
   mounted() {
     this.modalShow();
   },
-  layout: "noLayout",
+  layout: "empty",
 };
 </script>

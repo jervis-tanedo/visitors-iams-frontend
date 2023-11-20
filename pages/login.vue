@@ -33,15 +33,6 @@
             This app is currently in alpha phase.
           </p>
         </div>
-        <div class="flex justify-center mt-4">
-          <button class="text-white py-2 px-4" style="background-color:#8D1436"
-            @click="login">
-            Login
-          </button>
-        </div>
-        <div class="flex justify-center mt-2">
-            <NuxtLink class="text-white py-2 px-4" style="background-color:#8D1436" to="/registration">Register</NuxtLink>
-        </div>
       </div>
     </div>
   </div>

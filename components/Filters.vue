@@ -1,5 +1,6 @@
 <template>
     <div :class="maFilterCss ? 'my-2 w-full text-center' : 'my-2' ">
+       
         <div v-if="!isLoading">
             <div v-if="filter_headers.length > 0" class="mb-4 flex items-end">
                 <div v-for="(filter, filterKey) in filter_headers" :key="filterKey" :class="maFilterCss ? 'mr-2 w-full' : 'mr-2'">
