@@ -3,6 +3,7 @@ export const state = () => ({
         firstname: '',
         lastname: '',
         middlename: '',
+        mothersLastName: '',
         birthdate: '',
         phone: '',
         email: '',
@@ -31,6 +32,9 @@ export const getters = {
     },
     getLastname(state) {
         return state.userDetails.lastname
+    },
+    getMothersLastName(state) {
+        return state.userDetails.mothersLastName
     },
     getBirthdate(state) {
         return state.userDetails.birthdate
@@ -83,6 +87,7 @@ export const actions = {
         formData.append('first_name', state.userDetails.firstname)
         formData.append('middle_name', state.userDetails.middlename)
         formData.append('last_name', state.userDetails.lastname)
+        formData.append('mothers_last_name', state.userDetails.mothersLastName)
         formData.append('email', state.userDetails.email)
         formData.append('idNumber', state.userDetails.idNumber)
         formData.append('idType', state.userDetails.idType)
@@ -125,6 +130,10 @@ export const mutations = {
 
     SET_USER_BIRTHDATE (state, birthdate) {
         state.userDetails.birthdate = birthdate
+    },
+
+    SET_MOTHERS_LAST_NAME (state, mothersLastName) {
+        state.userDetails.mothersLastName = mothersLastName
     },
 
     SET_USER_PHONE(state, phone) {
