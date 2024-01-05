@@ -37,7 +37,8 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     ['@nuxtjs/moment', { /* module options */ }],
-    '@braid/vue-formulate/nuxt'
+    '@braid/vue-formulate/nuxt',
+    '@nuxtjs/fontawesome'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -45,7 +46,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    // '@nuxtjs/composition-api'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -113,4 +115,13 @@ export default {
     //   changeOrigin: true
     // }
   },
+
+  fontawesome: {
+    set: '@fortawesome/free-solid-svg-icons',
+    // icons: ['faHome']
+    icons:{
+     solid:true,
+     brands:true
+    }
+   },
 }
