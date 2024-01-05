@@ -3,6 +3,8 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-12">
                 <!-- {{ userLists }} -->
+                <!-- getFilters -->
+                <!-- getUserLists -->
                 <DataTable :isLoading="dataLoading" 
                     :isInitialLoad="initialLoad" 
                     :tableFilters="filters"
@@ -29,14 +31,6 @@
                             View
                         </button>
                     </template>
-                    <!-- <template #active="index">
-                        <font-awesome-icon v-if="index.index.is_active" :icon="['fas', 'check']"  class="icon alt text-green-500"/>
-                        <font-awesome-icon v-else :icon="['fas', 'x']"  class="icon alt text-red-500"/>
-                    </template>
-                    <template #verified="index">
-                        <font-awesome-icon v-if="index.index.is_verified" :icon="['fas', 'check']"  class="icon alt text-green-500"/>
-                        <font-awesome-icon v-else :icon="['fas', 'x']"  class="icon alt text-red-500"/>
-                    </template> -->
                 </DataTable>
             </div>
         </div>
@@ -178,23 +172,29 @@ export default {
             } else {
                 this.index = null
             }
-            // console.log(index)
+            console.log(index)
             this.$refs.viewRegistration.setDefault({
-                id: index.index.id,
-                first_name: index.index.first_name,
-                middle_name: index.index.middle_name,
-                last_name: index.index.last_name,
+                id: index.index.details.id,
+                first_name: index.index.details.first_name,
+                middle_name: index.index.details.middle_name,
+                last_name: index.index.details.last_name,
                 // sex: index.index.sex,
-                date_of_birth: index.index.date_of_birth,
+                date_of_birth: index.index.details.date_of_birth,
                 // civil_status: index.index.civil_status,
                 // is_verified: index.index.is_verified,
                 // is_active: index.index.is_active,
-                phone_number: index.index.phone_number,
-                email: index.index.email,
-                address: index.index.address,
-                id_type: index.index.id_type,
-                id_number: index.index.id_number,
-                id_file: index.index.id_file,
+                phone_number: index.index.details.phone_number,
+                email: index.index.details.email,
+                // address: index.index.address,
+                id_type: index.index.details.id_type,
+                id_number: index.index.details.id_number,
+                id_file: index.index.details.id_file,
+                region: index.index.details.region,
+                province: index.index.details.province,
+                city: index.index.details.city,
+                barangay: index.index.details.barangay,
+                address_line_1: index.index.details.address_line_1,
+                address_line_2: index.index.details.address_line_2 ? index.index.address_line_2 : ''
             })
             this.editableForm = false
         },
@@ -214,7 +214,7 @@ export default {
                 data: {
                     page: page,
                     items: this.numOfItems,
-                    fields: [
+                    ccolumn_name: [
                         'id',
                         'first_name',
                         'middle_name',
@@ -222,12 +222,20 @@ export default {
                         'phone_number',
                         'date_of_birth',
                         'email',
-                        'address',
+                        // 'address',
                         'id_type',
                         'id_number',
                         'id_file',
                         'request_status',
+                        'region',
+                        'province',
+                        'city',
+                        'barangay',
+                        'address_line_1',
+                        'address_line_2',
+                        // 'mothers_maiden_name'
                     ]
+                    // fields
                 }
             })
         },
