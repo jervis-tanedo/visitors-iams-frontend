@@ -55,7 +55,7 @@
   
             <div class="inline-block w-2/3">
               <img :src="hasPicture" alt="z" class="w-100 h-100 rounded-full">
-              <p class="font-bold text-xl">{{ this.$auth.user.given_name }}  {{ this.$auth.user.family_name }}</p>
+              <p class="font-bold text-xl">{{ this.user.first_name }}  {{ this.user.last_name }}</p>
               <p class="break-words text-sm">{{ this.$auth.user.email }}</p>
             </div>
           </div>
@@ -196,7 +196,8 @@
   
   <script>
   import Alert from './Alert.vue';
-  import QuickLinks from './QuickLinks.vue'
+  import QuickLinks from './QuickLinks.vue';
+  import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
   export default {
       components: { Alert, QuickLinks },
       name: 'Navbar',
@@ -220,8 +221,17 @@
               console.log(err);
             }
           },
+
+          ...mapActions({
+            getMasterDataUser: 'user/getMasterDataUser'
+          }),
       },
       computed: {
+        ...mapState({
+          user: (state) => state.user.userMd,
+          emails: (state) => state.user.emails,
+          phones: (state) => state.user.phones,
+        }),
         hasPicture(){
           if(this.$auth.user.picture){
             return this.$auth.user.picture
@@ -259,11 +269,13 @@
               },
           },
       },
-      mounted() {
+      async mounted() {
           document.addEventListener("keydown", (e) => {
               if (e.keyCode == 27 && this.isOpen)
                   this.isOpen = false;
           });
+
+          await this.getMasterDataUser();
       },
   }
   </script>
