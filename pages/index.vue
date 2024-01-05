@@ -2,8 +2,8 @@
   <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
       <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
-        <!-- <h2 class="text-2xl leading-7 font-semibold">
-          Hello, {{ this.$auth.user.given_name }}!
+        <h2 class="text-2xl leading-7 font-semibold">
+          Hello, {{ this.user.first_name }}!
         </h2>
         <p class="mt-3 text-gray-600">
           Welcome to the new Identity and Access Management System of UPLB! 
@@ -24,8 +24,8 @@
         <p class="mt-3 text-gray-600">
           This system is currently being co-created with the UPLB ITC.
           <button @click="test">TEST</button>
-        </p> -->
-        <RegistrationForm/>
+        </p>
+        <!-- <RegistrationForm/> -->
       </div>
     </div>
   </div>
@@ -41,6 +41,13 @@ export default {
         return {
             token: this.$auth.strategy.token.get()
         };
+    },
+    computed: {
+      ...mapState({
+      user: (state) => state.user.userMd,
+      emails: (state) => state.user.emails,
+      phones: (state) => state.user.phones,
+    }),
     },
     methods: {
         async test() {
