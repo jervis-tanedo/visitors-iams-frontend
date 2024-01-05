@@ -8,7 +8,7 @@
         </div>
         <div class="mt-5">
           <h2 class="text-gray-800 text-3xl font-semibold text-center">
-            Welcome to the UPLB Identity and Access Management System for Visitors
+            Welcome to the UPLB Identity and Access Management System
           </h2>
           <p class="mt-5 text-gray-600 text-center">
             This app is currently in alpha phase.
