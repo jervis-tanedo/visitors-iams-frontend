@@ -17,11 +17,11 @@
                     type="button"
                     label="Get code"
                     @click="submit"
-                    input-class="w-40 bg-uplbmaroon text-white font-bold py-2 px-4 mt-4 rounded"></FormulateInput>
+                    :disabled="isDisabled"
+                    input-class="w-40 bg-uplbmaroon text-white font-bold py-2 px-4 mt-4 rounded">
+                    <span v-if="isDisabled == true" class="loader">Processing...</span>
+                </FormulateInput>
                 </FormulateForm>
-                <!-- <label for="email" class="form-control block text-gray-700 text-sm font-bold mb-2">Please enter a valid email address</label>
-                <input type="email" v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"/>
-                <button @click="submit()" class="w-40 bg-uplbmaroon text-white font-bold py-2 px-4 mt-4 rounded">Get Code</button> -->
             </div>
         </div>
         <div class="grid grid-cols-1 gap-4" v-show="verifyPage">
@@ -61,6 +61,7 @@ export default {
         return {
             codePage: true,
             verifyPage: false,
+            isDisabled: false
         }
     },
     computed: {
@@ -103,6 +104,7 @@ export default {
             // });
             // this.codePage = false;
             // this.verifyPage = true;
+            this.isDisabled = true;
             this.getCode({
                 email: this.email
             }).then(()=>{
@@ -120,3 +122,15 @@ export default {
     },
 }
 </script>
+
+<style>
+.spinner_P7sC {
+    transform-origin: right;
+    animation: spinner_svv2 .75s infinite linear
+}
+
+@keyframes spinner_svv2 {
+    100% {
+        transform: rotate(360deg)
+    }
+}</style>
