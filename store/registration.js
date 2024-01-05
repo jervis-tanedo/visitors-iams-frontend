@@ -16,6 +16,13 @@ export const state = () => ({
         idPhoto: '',
         address: '',
         selfie: null,
+        region: '',
+        province: '',
+        city: '',
+        barangay: '',
+        addressLine1: '',
+        addressLine2: '',
+        civil_status: '',
     },
     // FIND SOLUTION IN ARRAY VALUE PROBLEM
     errorMsg: [],
@@ -74,6 +81,27 @@ export const getters = {
     },
     getAddress(state){
         return state.userDetails.address
+    },
+    getRegion(state){
+        return state.userDetails.region
+    },
+    getProvince(state){
+        return state.userDetails.province
+    },
+    getCity(state){
+        return state.userDetails.city
+    },
+    getBarangay(state){
+        return state.userDetails.barangay
+    },
+    getAddressLineOne(state){
+        return state.userDetails.addressLine1
+    },
+    getAddressLineTwo(state){
+        return state.userDetails.addressLine2
+    },
+    getCivilStatus(state){
+        return state.userDetails.civil_status
     }
 }
 
@@ -87,26 +115,39 @@ export const actions = {
         formData.append('first_name', state.userDetails.firstname)
         formData.append('middle_name', state.userDetails.middlename)
         formData.append('last_name', state.userDetails.lastname)
-        formData.append('mothers_last_name', state.userDetails.mothersLastName)
+        formData.append('mothers_name', state.userDetails.mothersLastName)
         formData.append('email', state.userDetails.email)
         formData.append('idNumber', state.userDetails.idNumber)
         formData.append('idType', state.userDetails.idType)
         formData.append('date_of_birth', state.userDetails.birthdate)
         formData.append('phone', state.userDetails.phone)
         formData.append('idPhoto', state.userDetails.idPhoto)
-        formData.append('address', state.userDetails.address)
+        // formData.append('address', state.userDetails.address)
+        formData.append('region', state.userDetails.region)
+        formData.append('province', state.userDetails.province)
+        formData.append('city', state.userDetails.city)
+        formData.append('barangay', state.userDetails.barangay)
+        formData.append('address_line_1', state.userDetails.addressLine1)
+        formData.append('address_line_2', state.userDetails.addressLine2)
         formData.append('selfie', state.userDetails.selfie)
-        try{
-            const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData).then(response => {
+        formData.append('sex', state.userDetails.sex)
+        // formData.append('civil_status', state.userDetails.civil_status)
+
+        try {
+            const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData)
+            if(res.statusCode == 400){
+                let message = "You already have a pending request"
+                commit('alert/ERROR', message, { root: true})
+            } else {
                 let message = "Application Success"
                 commit('alert/SUCCESS', message, { root: true })
                 console.log(response)
-            })
-            
+            }
             console.log(res)
         } catch (error) {
-            let message = "You already have a pending request"
+            let message = "Error: " + error
             commit('alert/ERROR', message, { root: true})
+            // console.log(error)
         }
     },
 }
@@ -179,6 +220,38 @@ export const mutations = {
 
     SET_SELFIE(state, selfie){
         state.userDetails.selfie = selfie
+    },
+
+    SET_SEX(state, sex){
+        state.userDetails.sex = sex
+    },
+
+    SET_REGION(state, region){
+        state.userDetails.region = region
+    },
+
+    SET_PROVINCE(state, province){
+        state.userDetails.province = province
+    },
+
+    SET_CITY(state, city){
+        state.userDetails.city = city
+    },
+
+    SET_BARANGAY(state, barangay){
+        state.userDetails.barangay = barangay
+    },
+
+    SET_ADDRESS_LINE_ONE(state, addressLine1){
+        state.userDetails.addressLine1 = addressLine1
+    },
+
+    SET_ADDRESS_LINE_TWO(state, addressLine2){
+        state.userDetails.addressLine2 = addressLine2
+    },
+
+    SET_CIVIL_STATUS(state, civil_status){
+        state.userDetails.civil_status = civil_status
     },
 
     CLEAR(state){

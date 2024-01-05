@@ -66,7 +66,7 @@
                     >
                       Address
                 </label>
-                <span>{{ input.address }}</span>
+                <span>{{ input.address_line_1 }}, </span><span v-if="input.address_line_2.length">{{ input.address_line_2 }}, </span><span>Brgy. {{ input.barangay }}, </span><span>{{ input.city }}, </span><span>{{ input.province }}, </span><span>{{ input.region }}. </span>
             </div>
             <div class="form-group mb-4">
                 <label
@@ -135,7 +135,7 @@
           </template>
           <template slot="footer">
             <!-- <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" @click="confirmAction()">Confirm</button> -->
-            <button type="button"  class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="isModalOpen = false; location.reload();">Ok</button>
+            <button type="button"  class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="isModalOpen = false;">Ok</button>
           </template>
         </Modal>
 
@@ -183,6 +183,12 @@ export default {
                 phone_number: "",
                 email: "",
                 address: "",
+                region: "",
+                province: "",
+                city: "",
+                barangay: "",
+                address_line_1: "",
+                address_line_2: "",
                 id_type: "",
                 id_number: "",
                 id_file: "",
@@ -215,6 +221,11 @@ export default {
                     name: "date_of_birth",
                     sortable: false,
                     label: "Date of Birth"
+                },
+                {
+                    name: "match",
+                    sortable: false,
+                    label: "Match"
                 },
                 // {
                 //     name: "action",
@@ -326,10 +337,16 @@ export default {
             // this.input.is_active = data.is_active
             this.input.phone_number = data.phone_number;
             this.input.email = data.email;
-            this.input.address = data.address;
+            // this.input.address = data.address;
             this.input.id_type = data.id_type;
             this.input.id_number = data.id_number;
             this.input.id_file = data.id_file;
+            this.input.region = data.region;
+            this.input.province = data.province;
+            this.input.city = data.city;
+            this.input.barangay = data.barangay;
+            this.input.address_line_1 = data.address_line_1;
+            this.input.address_line_2 = data.address_line_2;
             this.fetchTableData(1);
             this.viewPhoto(this.input.id);
             this.viewSelfie(this.input.id);
@@ -345,8 +362,8 @@ export default {
             this.fetchTableData(page)
         },
 
-        fetchTableData(page) { // reusable function for getting the data to be displayed in txn history
-            this.getData({
+        async fetchTableData(page) { // reusable function for getting the data to be displayed in txn history
+            await this.getData({
                 // link: this.module,
                 data: {
                     page: page,
@@ -384,6 +401,8 @@ export default {
                 middle_name: this.input.middle_name,
                 last_name: this.input.last_name,
                 date_of_birth: this.input.date_of_birth,
+                phone_number: this.input.phone_number,
+                address: this.input.address,
             });
             this.isModalOpen = true
             this.modal.title = 'Success'

@@ -36,7 +36,7 @@ export const getters = {
                     first_name: item.first_name, 
                     middle_name: item.middle_name,
                     last_name: item.last_name,
-                    address: item.address,
+                    // address: item.address,
                     id: item.id,
                     phone_number: item.phone_number,
                     email: item.email,
@@ -113,7 +113,7 @@ export const actions = {
                 const users = response.userLists
                 // const myArr = Object.values(users)
                 commit('SET_USER_LISTS', users)
-                // console.log(users)
+                console.log(response.userLists)
             })
         } catch(error) {
             console.log(error)
@@ -223,6 +223,7 @@ export const actions = {
         }
         let newKeycloakUser = {
             "enabled" : true,
+            "emailVerified" : true,
             "username" : data.email,
             "email" : data.email,
             "firstName" : data.first_name,
@@ -277,6 +278,9 @@ export const actions = {
         formData.append('last_name', state.person.last_name)
         formData.append('middle_name', state.person.middle_name)
         formData.append('sex', null)
+        formData.append('email', state.person.email)
+        // formData.append('address', state.person.address)
+        formData.append('phone_number', state.person.phone_number)
         formData.append('date_of_birth', state.person.date_of_birth)
         formData.append('civil_status', null)
         formData.append('is_verified', true)
@@ -295,7 +299,39 @@ export const actions = {
         } catch(error) {
             console.log(error)
         }
-    }
+    },
+
+    saveEmailtoMasterData({state, commit}){
+        let formData = new FormData();
+
+        formData.append('user_id', state.uuid);
+        formData.append('email', state.person.email);
+        formData.append('action', 'add_email');
+
+        const data = this.$axios.$post(`${process.env.MDMS_URL}/admin/emails`, formData).then(response => {
+            console.log(response);
+        })
+    },
+
+    async savePhoneAsPrimary({state, commit}, payload){
+        try {
+            const res = await this.$axios.$put(`${process.env.MDMS_URL}/phone/` + payload.id, payload)
+            console.log(res)
+            let message = "Primary phone changed successfully"
+            commit('alert/SUCCESS', message, { root: true })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    // async removePhoneAsPrimary({state, commit}, payload){
+    //     try {
+    //         const res = await this.$axios.$put(`${process.env.MDMS_URL}/phone/` + payload.id, payload)
+    //         console.log(res)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 }
 
 export const mutations = {
