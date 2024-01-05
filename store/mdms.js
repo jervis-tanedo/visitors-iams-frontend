@@ -23,6 +23,7 @@ export const actions = {
             tableParams = Object.assign(tableParams, state.order)
             const data = await this.$axios.$get(`${process.env.MDMS_URL}/admin/persons`, {params: tableParams})
             await commit('GET_DATA_LIST_SUCCESS', data.persons)
+            console.log(data)
         } catch (error) {
             if(error.response.status===422){  
                 let errList = ``;
