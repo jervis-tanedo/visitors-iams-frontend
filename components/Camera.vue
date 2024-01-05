@@ -4,7 +4,7 @@
         <div class="text-center justify-center py-3">
             <div class="justify-center">
                 <!-- <button @click="photoModal()" class="inline-flex justify-center py-4 px-4 border rounded-md shadow-sm bg-white text-sm font-medium bg-red-700 hover:bg-red-600 text-white"><i class="fa-solid fa-camera"></i> Take Photo</button> -->
-                <button @click="takePicture()" class="w-40 justify-center py-2 px-4 border rounded-md shadow-sm bg-white text-sm font-medium bg-uplbmaroon text-white"><i class="fa-solid fa-camera"></i> Take Photo</button>
+                <button @click="takePicture()" class="w-40 justify-center py-2 px-4 border rounded-md shadow-sm text-sm bg-uplbmaroon text-white font-bold"><i class="fa-solid fa-camera"></i> Take Photo</button>
             </div>
             <div>
                 <!-- <button @click="back()" class="w-40 justify-center py-2 px-4 border rounded-md shadow-sm bg-white text-sm font-medium bg-red-700 hover:bg-red-600 text-white">Cancel</button> -->
