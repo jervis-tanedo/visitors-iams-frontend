@@ -118,7 +118,7 @@
             <div class="grid grid-cols-1 gap-4 mb-4">
                 <div class="sm:px-6 sm:flex sm:flex-row-reverse">
                     <button class="w-40 inline-flex justify-center bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded" @click.prevent="openRejectModal()">Reject</button>
-                    <button class="w-40 inline-flex justify-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click.prevent="save()">Accept</button>
+                    <button class="w-40 inline-flex justify-center bg-uplbmaroon text-white font-bold py-2 px-4 rounded" @click.prevent="save()">Accept</button>
                 </div>
             </div>
         </div>
@@ -390,11 +390,6 @@ export default {
         },
 
         save(){
-            this.updateRegister({
-                id: this.input.id,
-                request_status: 'accepted',
-                email: this.input.email,
-            });
             this.addUserToKc({
                 email: this.input.email,
                 first_name: this.input.first_name,
@@ -402,11 +397,21 @@ export default {
                 last_name: this.input.last_name,
                 date_of_birth: this.input.date_of_birth,
                 phone_number: this.input.phone_number,
-                address: this.input.address,
+                region: this.input.region,
+                province: this.input.province,
+                city: this.input.city,
+                barangay: this.input.barangay,
+                address_line_1: this.input.address_line_1,
+                address_line_2: this.input.address_line_2,
             });
-            this.isModalOpen = true
-            this.modal.title = 'Success'
-            this.modal.content = `User added successfuly`
+            // this.updateRegister({
+            //     id: this.input.id,
+            //     request_status: 'accepted',
+            //     email: this.input.email,
+            // });
+            // this.isModalOpen = true
+            // this.modal.title = 'Success'
+            // this.modal.content = `User added successfuly`
         },
 
         openRejectModal(){
