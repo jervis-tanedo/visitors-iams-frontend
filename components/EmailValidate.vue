@@ -8,7 +8,8 @@
                     type="email"
                     label="Please enter a valid email address"
                     v-model="email"
-                    validation="email"
+                    validation="email|required"
+                    :errors="['Email already exists', 'oooo']"
                     error-class="text-red-500"
                     label-class="block text-gray-700 text-sm font-bold mb-2"
                     input-class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline">
@@ -41,6 +42,7 @@
                     label="Submit"
                     @click="compare"
                     input-class="w-40 bg-uplbgreen text-white font-bold py-2 px-4 mt-4 rounded"></FormulateInput>
+                    
                 </FormulateForm>
             </div>
         </div>
@@ -65,9 +67,15 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            inputErrors: state => state.emailValidate.inputErrors,
+            formErrors: state => state.emailValidate.formErrors,
+        }),
         ...mapGetters({
             getEmail: 'emailValidate/getEmail',
             getVcode: 'emailValidate/getVcode',
+            getCodePage: 'emailValidate/getCodePage',
+            getVerifyPage: 'emailValidate/getVerifyPage',
         }),
         email: {
             get(){
@@ -85,17 +93,38 @@ export default {
             set(value){
                 this.setVcode(value)
             }
+        },
+
+        code_page: {
+            get(){
+                return this.getCodePage
+            },
+            set(value){
+                this.setCodePage(value)
+            }
+        },
+
+        verify_page: {
+            get(){
+                return this.getVerifyPage
+            },
+            set(value){
+                this.setVerifyPage(value)
+            }
         }
     },
     methods: {
         ...mapMutations({
             setEmail: "emailValidate/SET_EMAIL",
-            setVcode: "emailValidate/SET_VCODE"
+            setVcode: "emailValidate/SET_VCODE",
+            setCodePage: "emailValidate/SET_CODE_PAGE",
+            setVerifyPage: "emailValidate/SET_VERIFY_PAGE",
         }),
 
         ...mapActions({
             getCode: "emailValidate/getCode",
-            validate: "emailValidate/validation"
+            validate: "emailValidate/validation",
+            checkEmail: "emailValidate/checkEmail"
         }),
 
         submit(){
@@ -105,11 +134,14 @@ export default {
             // this.codePage = false;
             // this.verifyPage = true;
             this.isDisabled = true;
-            this.getCode({
+            this.checkEmail({
                 email: this.email
             }).then(()=>{
-                this.codePage = false;
-                this.verifyPage = true;
+                this.codePage = this.code_page;
+                this.verifyPage = this.verify_page;
+                this.isDisabled = false;
+            }).catch((error)=>{
+                console.log(error)
             });
         },
 
