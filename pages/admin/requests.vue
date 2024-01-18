@@ -180,7 +180,7 @@ export default {
                 last_name: index.index.details.last_name,
                 // sex: index.index.sex,
                 date_of_birth: index.index.details.date_of_birth,
-                // civil_status: index.index.civil_status,
+                civil_status: index.index.civil_status,
                 // is_verified: index.index.is_verified,
                 // is_active: index.index.is_active,
                 phone_number: index.index.details.phone_number,
@@ -214,7 +214,7 @@ export default {
                 data: {
                     page: page,
                     items: this.numOfItems,
-                    ccolumn_name: [
+                    column_name: [
                         'id',
                         'first_name',
                         'middle_name',
@@ -233,7 +233,8 @@ export default {
                         'barangay',
                         'address_line_1',
                         'address_line_2',
-                        // 'mothers_maiden_name'
+                        'mothers_maiden_name',
+                        'civil_status'
                     ]
                     // fields
                 }
