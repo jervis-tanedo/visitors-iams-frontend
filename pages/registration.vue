@@ -149,7 +149,7 @@
                     </FormulateInput>
                   </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                   <div class="mb-4">
                     <FormulateInput
                     type="text"
@@ -168,6 +168,19 @@
                     v-model="sex"
                     placeholder="Choose..."
                     :options="sexOption"
+                    validation="required"
+                    error-class="text-red-500"
+                    label-class="block text-gray-700 text-sm font-bold mb-2"
+                    input-class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                    ></FormulateInput>
+                  </div>
+                  <div class="mb-4">
+                    <FormulateInput
+                    type="select"
+                    label="Civil Status"
+                    placeholder="Choose..."
+                    :options="['Single', 'Married', 'Widowed', 'Legally Seperated']"
+                    v-model="civilStatus"
                     validation="required"
                     error-class="text-red-500"
                     label-class="block text-gray-700 text-sm font-bold mb-2"
@@ -225,21 +238,6 @@
                     :options="idOptions"></FormulateInput>
                   </div>
                   <div class="form-group mb-4">
-                    <!-- <label
-                      class="form-control block text-gray-700 text-sm font-bold mb-2"
-                      for="identification"
-                      >ID Number</label
-                    >
-                    <input
-                      required
-                      tabindex=""
-                      class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
-                      v-model="idNumber"
-                      type="text"
-                    />
-                    <div v-if="errors.idNumber">
-                      <span class="text-red-500">Required</span>
-                    </div> -->
                     <FormulateInput
                     type="text"
                     v-model="idNumber"
@@ -252,19 +250,6 @@
                 </div>
                 <div class="grid grid-cols-1 gap-4 h-95">
                   <div class="form-group mb-4">
-                    <!-- <input type="file" name="idPhoto" id=""> -->
-                    <!-- <label
-                      class="form-control block text-gray-700 text-sm font-bold mb-2"
-                      for="idPhoto"
-                      >Upload ID</label
-                    ><input
-                          id="idPhoto"
-                          type="file"
-                          class=""
-                          @change="onFileChange($event)"
-                          name="idPhoto"
-                          accept="image/*, application/pdf"
-                        /> -->
                       <FormulateInput
                       type="image"
                       name="idPhoto"
@@ -286,16 +271,6 @@
                       file-image-preview-image="border border-black"                  
                       ></FormulateInput>
                   </div>
-                  <!-- <div class="form-group mb-4">
-                    <label
-                      for="frame"
-                      class="form-control block text-gray-700 text-sm font-bold mb-2"
-                      >Preview:</label
-                    >
-                    <img alt="" id="frame" class="border border-black aspect-auto">
-                    
-                    <img alt="" id="frame" class="h-64 w-96 border border-black aspect-auto">
-                  </div> -->
                 </div>
                 <div class="grid grid-cols-1 gap-4">
                   <div class="form-group mb-4">
@@ -378,7 +353,6 @@
                       >Selfie:</label
                     >
                     <Camera v-if="currentStep == 1"></Camera>
-                    <!-- <button @click="openCamera()" class="w-40 bg-red-500 hover:bg-uplbmaroon text-white font-bold py-2 px-4 rounded">Take selfie</button> -->
                   </div>
                   <div class="form-group mb-4">
                     <label
@@ -417,7 +391,7 @@
                         <span name="sLastName">{{ lastname }}</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-4 gap-4">
                     <div class="form-group mb-4">
                         <label for="sEmail"
                         class="form-control block text-gray-700 text-sm font-bold mb-2"
@@ -435,6 +409,12 @@
                         class="form-control block text-gray-700 text-sm font-bold mb-2"
                         >Phone Number</label>
                         <span name="sPhoneNumber">{{ phone }}</span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="sCivilStatus"
+                        class="form-control block text-gray-700 text-sm font-bold mb-2"
+                        >Phone Number</label>
+                        <span name="sCivilStatus">{{ civilStatus }}</span>
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-4">
@@ -509,25 +489,6 @@
             </div>
           </div>
         </div>
-        <!-- <GenericModal :isOpen="photoModal" v-if="photoModal">
-          <template v-slot:content>
-              <div>
-                <Camera @closeModal="close"></Camera>
-              </div>
-          </template>
-        </GenericModal> -->
-        <!-- <GenericModal :isOpen="showModal" v-if="showModal">
-          <template v-slot:content>
-            <div
-              class="relative overflow-x-hidden items-top justify-center min-h-screen h-full bg-gray-100 pt-10"
-            >
-              <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <TermsOfService @closeModal="close"> </TermsOfService>
-                should be TOS
-              </div>
-            </div>
-          </template>
-        </GenericModal> -->
         <Modal
           :isOpen="isModalOpen"
           iconType="info"
