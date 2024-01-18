@@ -15,7 +15,7 @@
             <span
                 class="justify-right items-right">
                 <button
-                    class="px-4 p-2 mb-6 justify-right items-right text-white bg-red-400 hover:bg-red-600 rounded"
+                    class="px-4 p-2 mb-6 justify-right items-right text-white bg-uplbmaroon rounded"
                     @click="drawer">
                     Close
                 </button>
