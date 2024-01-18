@@ -3,6 +3,11 @@ export const state = () => ({
     code: null,
     validated: false,
     vcode: null,
+    code_page: true,
+    verify_page: false,
+    inputErrors: {},
+    formErrors:[],
+    isTaken: false
 })
 
 export const getters = {
@@ -20,10 +25,48 @@ export const getters = {
 
     getVcode(state){
         return state.vcode
+    },
+
+    getCodePage(state){
+        return state.code_page
+    },
+
+    getVerifyPage(state){
+        return state.verify_page
+    },
+
+    getIsTaken(state){
+        return state.isTaken
     }
 }
 
 export const actions = {
+
+    async checkEmail({commit, dispatch}, payload){
+        try {
+            const res = await this.$axios.$post(`${process.env.MDMS_URL}/email-validate`, payload)
+            if (res.email === payload.email){
+                commit('SET_IS_TAKEN', true)
+            }
+        } catch (error) {
+            if (error.response && error.response.status) {
+                switch (error.response.status){
+                    case 422:
+                        this.inputErrors = error.response.data.errors
+                        this.formErrors = error.response.data.message
+                        return
+                    case 409:
+                        // this.this.inputErrors = error.response.data.errors
+                        // this.formErrors = error.response.data.message
+                        let message = `Email already exists`
+                        commit('alert/ERROR', message, {root: true})
+                        return
+                }
+            }
+            console.log(error)
+        }
+    },
+
     async getCode({state, commit}, payload){
         try {
             const res = await this.$axios.$post(`${process.env.BACKEND_URL}/get-code`, payload)
@@ -72,5 +115,25 @@ export const mutations = {
 
     SET_VCODE(state, vcode){
         state.vcode = vcode
+    },
+
+    SET_CODE_PAGE(state){
+        state.code_page = false
+    },
+
+    SET_VERIFY_PAGE(state){
+        state.verify_page = true
+    },
+
+    SET_INPUT_ERRORS(state, errors){
+        state.inputErrors = errors
+    },
+
+    SET_FORM_ERRORS(state, errors){
+        state.formErrors = errors
+    },
+
+    SET_IS_TAKEN(state, isTaken){
+        state.isTaken = isTaken
     }
 }
