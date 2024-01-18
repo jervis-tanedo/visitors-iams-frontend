@@ -122,7 +122,6 @@ export const actions = {
         formData.append('date_of_birth', state.userDetails.birthdate)
         formData.append('phone', state.userDetails.phone)
         formData.append('idPhoto', state.userDetails.idPhoto)
-        // formData.append('address', state.userDetails.address)
         formData.append('region', state.userDetails.region)
         formData.append('province', state.userDetails.province)
         formData.append('city', state.userDetails.city)
@@ -131,7 +130,7 @@ export const actions = {
         formData.append('address_line_2', state.userDetails.addressLine2)
         formData.append('selfie', state.userDetails.selfie)
         formData.append('sex', state.userDetails.sex)
-        // formData.append('civil_status', state.userDetails.civil_status)
+        formData.append('civil_status', state.userDetails.civil_status)
 
         try {
             const res = await this.$axios.$post(`${process.env.BACKEND_URL}/register`, formData)
