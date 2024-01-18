@@ -171,8 +171,7 @@
             class="
               w-56 
               text-white 
-              bg-red-700 
-              hover:bg-red-600 
+              bg-uplbmaroon
               font-medium 
               rounded-lg 
               text-sm 
@@ -213,9 +212,8 @@
           },
           async logout() {
             try {
-              const response = await this.$auth.logout("keycloak");
+              await this.$auth.logout("keycloak");
               // eslint-ignore-next-line
-              console.log(response);
             } catch (err) {
               // eslint-ignore-next-line
               console.log(err);
@@ -275,7 +273,10 @@
                   this.isOpen = false;
           });
 
-          await this.getMasterDataUser();
+          // await this.getMasterDataUser();
+      },
+      async created(){
+        await this.getMasterDataUser();
       },
   }
   </script>
