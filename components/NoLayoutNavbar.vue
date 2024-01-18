@@ -11,6 +11,7 @@
                     <li class="p-2"><button @click="login" class="btn-lg bg-uplbgreen text-white rounded p-3">Sign In</button></li>
                     <li class="p-2"><NuxtLink to="registration" class="btn-lg bg-uplbmaroon text-white rounded p-3">Sign Up</NuxtLink></li>
                 </ul>
+                <Alert/>
             </nav>
         </header>
     </div>
