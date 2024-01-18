@@ -74,9 +74,9 @@ export default {
     },
     computed: {
         //AMIS
-        isAmisAdmin() {
+        async isAmisAdmin() {
             if(this.$auth.user.resource_access['uplb-amis']){
-                const roles = this.$auth.user.resource_access['uplb-amis'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-amis'].roles;
                 return roles.find(el => el === "admin") ? true : false;
             } else {
                 return false
@@ -84,108 +84,108 @@ export default {
             
             
         },
-        isAmisStudent() {
+        async isAmisStudent() {
             if(this.$auth.user.resource_access['uplb-amis']){
-                const roles = this.$auth.user.resource_access['uplb-amis'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-amis'].roles;
                 return roles.find(el => el === "student") ? true : false;
             } else {
                 return false
             }
         },
-        isAmisFaculty() {
+        async isAmisFaculty() {
             if(this.$auth.user.resource_access['uplb-amis']){
-                const roles = this.$auth.user.resource_access['uplb-amis'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-amis'].roles;
                 return roles.find(el => el === "faculty") ? true : false;
             } else {
                 return false
             }
         },
-        isAmisReps() {
+        async isAmisReps() {
             if(this.$auth.user.resource_access['uplb-amis']){
-                const roles = this.$auth.user.resource_access['uplb-amis'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-amis'].roles;
                 return roles.find(el => el === "reps") ? true : false;
             } else {
                 return false
             }
         },
-        isAmisSuperAdmin() {
+        async isAmisSuperAdmin() {
             if(this.$auth.user.resource_access['uplb-amis']){
-                const roles = this.$auth.user.resource_access['uplb-amis'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-amis'].roles;
                 return roles.find(el => el === "super_admin") ? true : false;
             } else {
                 return false
             }
         },
         //ORS
-        isOrsUnitAdmin() {
+        async isOrsUnitAdmin() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "unit_admin") ? true : false;
             } else {
                 return false
             }
         },
-        isOrsOvcre() {
+        async isOrsOvcre() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "ovcre_admin") ? true : false;
             } else {
                 return false
             }
         },
-        isOrsCollegeHead() {
+        async isOrsCollegeHead() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "college_head") ? true : false;
             } else {
                 return false
             }
         },
-        isOrsFaculty() {
+        async isOrsFaculty() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "faculty") ? true : false;
             } else {
                 return false
             }
         },
-        isOrsReps() {
+        async isOrsReps() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "reps") ? true : false;
             } else {
                 return false
             }
         },
-        isOrsUnitHead() {
+        async isOrsUnitHead() {
             if(this.$auth.user.resource_access['uplb-ors']){
-                const roles = this.$auth.user.resource_access['uplb-ors'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-ors'].roles;
                 return roles.find(el => el === "unit_head") ? true : false;
             } else {
                 return false
             }
         },
         //IAMS
-        isIamsAdmin() {
+        async isIamsAdmin() {
             if(this.$auth.user.resource_access['uplb-iams']){
-                const roles = this.$auth.user.resource_access['uplb-iams'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-iams'].roles;
                 return roles.find(el => el === "admin") ? true : false;
             } else {
                 return false
             }
         },
         //IAMS VISITORS
-        isIamsVisitorAdmin(){
+        async isIamsVisitorAdmin(){
             if(this.$auth.user.resource_access['uplb-iams-visitor']){
-                const roles = this.$auth.user.resource_access['uplb-iams-visitor'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-iams-visitor'].roles;
                 return roles.find(el => el === "admin") ? true : false;
             } else {
                 return false
             }
         },
-        isIamsVisitor(){
+        async isIamsVisitor(){
             if(this.$auth.user.resource_access['uplb-iams-visitor']){
-                const roles = this.$auth.user.resource_access['uplb-iams-visitor'].roles;
+                const roles = await this.$auth.user.resource_access['uplb-iams-visitor'].roles;
                 return roles.find(el => el === "visitor") ? true : false;
             } else {
                 return false
