@@ -270,7 +270,7 @@ export const actions = {
         }
     },
 
-    saveToMasterData({state, commit}) {
+    saveToMasterData({state, commit, dispatch}) {
         let formData = new FormData();
 
         formData.append('id', state.uuid)
@@ -280,6 +280,12 @@ export const actions = {
         formData.append('sex', null)
         formData.append('email', state.person.email)
         // formData.append('address', state.person.address)
+        formData.append('region', state.person.region)
+        formData.append('province', state.person.province)
+        formData.append('municipality', state.person.city)
+        formData.append('barangay', state.person.barangay)
+        formData.append('address_line_1', state.person.address_line_1)
+        formData.append('address_line_2', state.person.address_line_2)
         formData.append('phone_number', state.person.phone_number)
         formData.append('date_of_birth', state.person.date_of_birth)
         formData.append('civil_status', null)
@@ -295,6 +301,12 @@ export const actions = {
                 let successMsg = "User created"
                 commit('alert/SUCCESS', successMsg, { root: true })
                 commit('CLEAR')
+                dispatch('update', 
+                {
+                    id: this.input.id,
+                    request_status: 'accepted',
+                    email: this.input.email,
+                })
             })
         } catch(error) {
             console.log(error)
