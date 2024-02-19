@@ -144,8 +144,11 @@ export const actions = {
             }
             console.log(res)
         } catch (error) {
-            let message = "Error: " + error
-            commit('alert/ERROR', message, { root: true})
+            if(error.statusCode == 409){
+                let message = "You already have a pending request. Please wait for a decision. Thank you."
+                commit('alert/ERROR', message, { root: true})
+            }
+            
             // console.log(error)
         }
     },

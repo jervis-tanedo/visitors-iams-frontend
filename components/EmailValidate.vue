@@ -9,7 +9,8 @@
                     label="Please enter a valid email address"
                     v-model="email"
                     validation="email|required"
-                    :errors="['Email already exists', 'oooo']"
+                    validation-name="Email"
+                    :errors=getFormErrors
                     error-class="text-red-500"
                     label-class="block text-gray-700 text-sm font-bold mb-2"
                     input-class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline">
@@ -76,6 +77,8 @@ export default {
             getVcode: 'emailValidate/getVcode',
             getCodePage: 'emailValidate/getCodePage',
             getVerifyPage: 'emailValidate/getVerifyPage',
+            getIsTaken: 'emailValidate/getIsTaken',
+            getFormErrors: 'emailValidate/getFormErrors',
         }),
         email: {
             get(){
@@ -111,7 +114,7 @@ export default {
             set(value){
                 this.setVerifyPage(value)
             }
-        }
+        },
     },
     methods: {
         ...mapMutations({
@@ -119,6 +122,7 @@ export default {
             setVcode: "emailValidate/SET_VCODE",
             setCodePage: "emailValidate/SET_CODE_PAGE",
             setVerifyPage: "emailValidate/SET_VERIFY_PAGE",
+            setIsTaken: "emailValidate/SET_IS_TAKEN",
         }),
 
         ...mapActions({

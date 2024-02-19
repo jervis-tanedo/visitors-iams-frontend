@@ -413,7 +413,7 @@
                     <div class="form-group mb-4">
                         <label for="sCivilStatus"
                         class="form-control block text-gray-700 text-sm font-bold mb-2"
-                        >Phone Number</label>
+                        >Civil Status</label>
                         <span name="sCivilStatus">{{ civilStatus }}</span>
                     </div>
                 </div>

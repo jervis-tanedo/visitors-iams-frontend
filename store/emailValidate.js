@@ -37,6 +37,10 @@ export const getters = {
 
     getIsTaken(state){
         return state.isTaken
+    },
+
+    getFormErrors(state){
+        return state.formErrors
     }
 }
 
@@ -45,15 +49,23 @@ export const actions = {
     async checkEmail({commit, dispatch}, payload){
         try {
             const res = await this.$axios.$post(`${process.env.MDMS_URL}/email-validate`, payload)
-            if (res.email === payload.email){
+            if (payload.email == res.data.email){
+                console.log(res.data.email)
                 commit('SET_IS_TAKEN', true)
+                let message = 'Email is already taken'
+                // commit('alert/ERROR', message, {root:true})
+                commit('SET_FORM_ERRORS', message)
+            }else if(res.data == null){
+                dispatch('getCode', payload)
+                commit('SET_CODE_PAGE', false)
+                commit('SET_VERIFY_PAGE', true)
             }
         } catch (error) {
             if (error.response && error.response.status) {
                 switch (error.response.status){
                     case 422:
-                        this.inputErrors = error.response.data.errors
-                        this.formErrors = error.response.data.message
+                        // this.inputErrors = error.response.data.errors
+                        // this.formErrors = error.response.data.message
                         return
                     case 409:
                         // this.this.inputErrors = error.response.data.errors
@@ -75,7 +87,7 @@ export const actions = {
             let message = `A code has been sent to your email address`
             await commit('alert/SUCCESS', message, {root: true})
         } catch (error) {
-            // console.log(error)
+            console.log(error)
             if(error.response.status === 422){
                 let errMessage = `Email field is required`
                 await commit('alert/ERROR', errMessage, { root: true })
@@ -117,12 +129,12 @@ export const mutations = {
         state.vcode = vcode
     },
 
-    SET_CODE_PAGE(state){
-        state.code_page = false
+    SET_CODE_PAGE(state, setCode){
+        state.code_page = setCode
     },
 
-    SET_VERIFY_PAGE(state){
-        state.verify_page = true
+    SET_VERIFY_PAGE(state, verifyPage){
+        state.verify_page = verifyPage
     },
 
     SET_INPUT_ERRORS(state, errors){
@@ -135,5 +147,9 @@ export const mutations = {
 
     SET_IS_TAKEN(state, isTaken){
         state.isTaken = isTaken
+    },
+
+    SET_FORM_ERRORS(state, formErrors){
+        state.formErrors = formErrors
     }
 }
